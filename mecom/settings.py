@@ -25,7 +25,7 @@ SECRET_KEY = 'b(7+5#+1ey()%!d9auzj1#r@n@2@1q$o1f4=3-$m@ck92(&y#n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [dubemstore.herokuapp.com]
 
 
 # Application definition
