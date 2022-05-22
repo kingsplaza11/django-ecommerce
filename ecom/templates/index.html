@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-left">
+                <img src="{% static 'images/img6.png' %}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> DUbi-Stores</strong></h1>
+                            <p class="m-b-40">a new era of ecommerce <br> makes you want feel the joy in easy shopping.</p>
+                            <p><a class="btn hvr-hover" href="#">Shop Now</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="{% static 'images/img8.png' %}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>We <br> offer</strong></h1>
+                            <p class="m-b-40">our customers the best product in the market <br> At the best available prices(cheap).</p>
+                            <p><a class="btn hvr-hover" href="#">Shop Now</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-right">
+                <img src="{% static 'images/img10.png' %}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>QUick <br> delivery</strong></h1>
+                            <p class="m-b-40">we deliver to your desired location on time and within three days of order<br> so you can shop gifts for your loved ones...</p>
+                            <p><a class="btn hvr-hover" href="#">Shop Now</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        </div>
+    </div>
+
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Search All Products</h1>
+                        <p>listing of all products in stock.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <section class="text-center mb-4" style="margin-top: 30px;">
+                  <div class="row wow fadeIn">
+                  {% for item in object_list %}
+                    <div class="col-lg-3 col-md-6 mb-4">
+                      <div class="card">
+                        <div class="view overlay">
+          
+                            <img src="{{ item.image.url }}" class="card-img-top"
+                            alt="">
+                            
+                          <a href="{{ item.get_absolute_url }}">
+                            <div class="mask rgba-white-slight"></div>
+                          </a>
+                        </div>
+                        <div class="card-body text-center">
+                          <a href="" class="grey-text">
+                            <h5>{{ item.get_category_display }}</h5>
+                          </a>
+                          <h5>
+                            <strong>
+                              <a href="{{ item.get_absolute_url }}" class="dark-grey-text btn-block">{{ item.title }}
+                              </a>
+                            </strong>
+                          </h5>
+          
+                          <h4 class="font-weight-bold blue-text">
+                            <strong>NGN
+                            {% if item.discountprice %}
+                            {{ item.discountprice }}
+                            
+                            {% else %}
+                            {{ item.price }}
+                            {% endif %}
+                            </strong>
+                          </h4>
+          
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+          
+                  </div>
+                </section>
+                {% if is_paginated %}
+                <nav class="d-flex justify-content-center wow fadeIn">
+                  <ul class="pagination pg-blue">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                  {% endif %}  
+          
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                        <span class="sr-only">(current)</span>
+                      </a>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+          
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+                {% endif %}
+              </div>
+            </main>
+        </div>
+    </div>
+
+{% endblock %}

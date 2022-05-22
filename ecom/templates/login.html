@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    {% block title %} Login {% endblock %}
+
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css">
+
+    {% block body %}
+
+        <div class="login-container">
+            <form class="form-signin needs-validation" novalidate action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 title-thin text-dark-red">Dubi Stores</h1>
+                </div>
+
+                {% if error_message %}
+                <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+                {% endif %}
+        
+                <div class="form-label-group">
+                    <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required autofocus>
+                    <label for="inputUsername">Username</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                        Please provide username.
+                    </div>
+                    <small><a href="#">Forgot Username?</a></small>
+                </div>
+        
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+                    <label for="inputPassword">Password</label>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                        Please provide password.
+                    </div>
+                    <small><a href="#">Forgot Password?</a></small>
+                </div>
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+
+                <div class="form-label-group">
+                    <input class="btn btn-block btn-secondary" type="submit" value="Login">
+                </div>
+
+                <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+            </form>
+        </div>
+    
+    {% endblock %}
+
+    {% block script %}<script src="{% static 'js/register.js' %}"></script>{% endblock %}
+{% endblock %}

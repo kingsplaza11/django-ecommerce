@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+      <div class="table-responsive text-nowrap">
+      <h2 style="font-size: 23px"><span><b>Hi {{ user.username }}, this is your order summary</b></span> </h2>
+
+  <table class="table table-striped">
+    <thead class="black white-text">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product title</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total Item Price</th>
+        
+      </tr>
+    </thead> 
+    <tbody>
+    {% for order_item in object.products.all %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ order_item.product.title }}</td>
+        <td>NGN{{ order_item.product.price }}</td>
+        <td><a href="{% url 'remove-single-item-from-cart' order_item.product.slug %}"><i class="fas fa-cart-arrow-down mr-3"></i></a>{{ order_item.quantity }}<a href="{% url 'add-to-cart' order_item.product.slug %}"><i class="fas fa-cart-plus ml-3"></i></a></td>
+        <td>
+        {% if order_item.product.discount %}
+          NGN{{ order_item.get_total_discount_item_price }}
+         
+           <span class="badge badge-primary">You Saved NGN{{ order_item.get_total_amount_saved }}</span>
+        {% else %}
+        
+         NGN{{ order_item.get_total_item_price }}
+        {% endif %}
+        <a href="{% url 'remove-from-cart' order_item.product.slug %}"><i class="fas fa-trash-alt float-right" style="color: red;"></i></a>
+        </td>
+        
+        
+      </tr>
+      {% empty %}
+       <tr>
+         <td colspan="5">Your cart is empty</td>
+       </tr>
+       <tr>
+       <td>
+      
+      <a class="btn btn-primary float-right" href="{% url 'home' %} ">Continue to shop</a></td>
+       </td> 
+      </tr>
+    {% endfor %}  
+    {% if object.get_total %}
+    <tr>
+    <td colspan="4"><b>Order Total</b></td>
+        <td><b>NGN{{ object.get_total }}</b></td>
+      </tr>
+      <tr>
+      <td colspan="5"><a class="btn btn-dark" href="{% url 'checkout' %} ">Proceed to checkout</a>
+      <a class="btn btn-dark float-right" href="{% url 'home' %} ">Continue to shop</a></td>
+        
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+</div>
+
+
+
+    </div>
+  </main>
+{% endblock content %}
